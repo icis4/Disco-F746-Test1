@@ -1,10 +1,8 @@
-Stm32CubeIDE Template
-========================
+Stm32CubeIDE Template for Disco F746
+--------------------------------------
 
-* line
+### Board *Disco F746*
 
-Requirements
--------------
-
-- line
-
+### Stm32CubeIDE 1.21
+ 
+### Stm32CubeProgrammer 2.3.1
