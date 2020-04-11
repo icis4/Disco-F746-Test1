@@ -12,7 +12,11 @@
 
 int _write(int file, char *ptr, int len)
 {
-	HAL_UART_Transmit(&huart1, (uint8_t*)ptr, len, 100);
+	switch(file) {
+	default:
+		HAL_UART_Transmit(&huart1, (uint8_t*)ptr, len, 100);
+		break;
+	}
 
 	return len;
 }

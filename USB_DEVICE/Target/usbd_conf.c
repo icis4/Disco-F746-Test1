@@ -534,7 +534,7 @@ USBD_StatusTypeDef USBD_LL_DeInit(USBD_HandleTypeDef *pdev)
 }
 
 /**
-  * @brief  Starts the low level portion of the device driver. 
+  * @brief  Starts the low level portion of the device driver.
   * @param  pdev: Device handle
   * @retval USBD status
   */
@@ -705,7 +705,7 @@ USBD_StatusTypeDef USBD_LL_SetUSBAddress(USBD_HandleTypeDef *pdev, uint8_t dev_a
   * @param  size: Data size    
   * @retval USBD status
   */
-USBD_StatusTypeDef USBD_LL_Transmit(USBD_HandleTypeDef *pdev, uint8_t ep_addr, uint8_t *pbuf, uint16_t size)
+USBD_StatusTypeDef USBD_LL_Transmit(USBD_HandleTypeDef *pdev, uint8_t ep_addr, uint8_t *pbuf, uint32_t size)
 {
   HAL_StatusTypeDef hal_status = HAL_OK;
   USBD_StatusTypeDef usb_status = USBD_OK;
@@ -725,7 +725,7 @@ USBD_StatusTypeDef USBD_LL_Transmit(USBD_HandleTypeDef *pdev, uint8_t ep_addr, u
   * @param  size: Data size
   * @retval USBD status
   */
-USBD_StatusTypeDef USBD_LL_PrepareReceive(USBD_HandleTypeDef *pdev, uint8_t ep_addr, uint8_t *pbuf, uint16_t size)
+USBD_StatusTypeDef USBD_LL_PrepareReceive(USBD_HandleTypeDef *pdev, uint8_t ep_addr, uint8_t *pbuf, uint32_t size)
 {
   HAL_StatusTypeDef hal_status = HAL_OK;
   USBD_StatusTypeDef usb_status = USBD_OK;
@@ -761,7 +761,7 @@ void HAL_PCDEx_LPM_Callback(PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef msg)
   case PCD_LPM_L0_ACTIVE:
     if (hpcd->Init.low_power_enable)
     {
-      SystemClock_Config();
+      SystemClockConfig_Resume();
       
       /* Reset SLEEPDEEP bit of Cortex System Control Register. */
       SCB->SCR &= (uint32_t)~((uint32_t)(SCB_SCR_SLEEPDEEP_Msk | SCB_SCR_SLEEPONEXIT_Msk));
@@ -785,7 +785,7 @@ void HAL_PCDEx_LPM_Callback(PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef msg)
 }
 
 /**
-  * @brief  Delays routine for the USB Device Library.
+  * @brief  Delays routine for the USB device library.
   * @param  Delay: Delay in ms
   * @retval None
   */
@@ -794,6 +794,17 @@ void USBD_LL_Delay(uint32_t Delay)
   HAL_Delay(Delay);
 }
 
+/* USER CODE BEGIN 5 */
+/**
+  * @brief  Configures system clock after wake-up from USB resume callBack:
+  *         enable HSI, PLL and select PLL as system clock source.
+  * @retval None
+  */
+void SystemClockConfig_Resume(void)
+{
+  SystemClock_Config();
+}
+/* USER CODE END 5 */
 /**
   * @brief  Retuns the USB status depending on the HAL status:
   * @param  hal_status: HAL status

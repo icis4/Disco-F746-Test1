@@ -243,7 +243,7 @@
 
 #define _FS_REENTRANT    1  /* 0:Disable or 1:Enable */
 #define _FS_TIMEOUT      1000 /* Timeout period in unit of time ticks */
-#define _SYNC_t          osSemaphoreId 
+#define _SYNC_t          osSemaphoreId_t 
 /* The option _FS_REENTRANT switches the re-entrancy (thread safe) of the FatFs
 /  module itself. Note that regardless of this option, file access to different
 /  volume is always re-entrant and volume control functions, f_mount(), f_mkfs()
@@ -261,10 +261,10 @@
 /  SemaphoreHandle_t and etc.. A header file for O/S definitions needs to be
 /  included somewhere in the scope of ff.h. */
 
-/* define the ff_malloc ff_free macros as FreeRTOS pvPortMalloc and vportFree macros */
+/* define the ff_malloc ff_free macros as FreeRTOS pvPortMalloc and vPortFree macros */
 #if !defined(ff_malloc) && !defined(ff_free)
 #define ff_malloc  pvPortMalloc
-#define ff_free  vportFree
+#define ff_free  vPortFree
 #endif
 
 #endif /* _FFCONF */
