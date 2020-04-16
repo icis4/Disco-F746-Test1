@@ -22,7 +22,6 @@ extern void MX_FATFS_Init(void);
 result_t InitApplication(void)
 {
 	/* init code for USB_HOST */
-	MX_USB_DEVICE_Init();
 
 	MX_FATFS_Init();
 

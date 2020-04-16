@@ -24,6 +24,7 @@
 #include "adc.h"
 #include "crc.h"
 #include "dcmi.h"
+#include "dma.h"
 #include "dma2d.h"
 #include "eth.h"
 #include "fatfs.h"
@@ -37,13 +38,15 @@
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
-#include "usb_device.h"
+#include "usb_otg.h"
 #include "gpio.h"
 #include "fmc.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdlib.h>
+#include <stdio.h>
+#include "bsp/stm32746g_discovery_qspi.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -112,13 +115,39 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_FMC_Init();
-  MX_QUADSPI_Init();
   MX_RTC_Init();
   MX_SDMMC1_SD_Init();
   MX_USART1_UART_Init();
-  MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
+  printf("\n*** START ***\n");
+
+  /* Flash Disk */
+  uint8_t result = BSP_QSPI_Init();
+  if (result == HAL_OK) {
+	  printf("[PASS]");
+	  MX_FATFS_Init();
+  } else {
+	  switch(result) {
+	  case 0:
+		  printf("[OK]");
+		  break;
+	  case 1:
+		  printf("[ERROR]");
+		  break;
+	  case 2:
+		  printf("[BUSY]");
+		  break;
+	  case 3:
+		  printf("[TIMEOUT]");
+		  break;
+	  default:
+		  printf("[ERR:%d]", result);
+		  break;
+	  }
+  }
+  puts(" QSPI");
 
   /* USER CODE END 2 */
 
