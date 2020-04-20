@@ -72,6 +72,7 @@ char **environ = __env;
 /* Functions */
 void initialise_monitor_handles()
 {
+
 }
 
 int _getpid(void)

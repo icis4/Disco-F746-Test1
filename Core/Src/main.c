@@ -121,34 +121,6 @@ int main(void)
   MX_SDMMC1_SD_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  printf("\n*** START ***\n");
-
-  /* Flash Disk */
-  uint8_t result = BSP_QSPI_Init();
-  if (result == HAL_OK) {
-	  printf("[PASS]");
-	  MX_FATFS_Init();
-  } else {
-	  switch(result) {
-	  case 0:
-		  printf("[OK]");
-		  break;
-	  case 1:
-		  printf("[ERROR]");
-		  break;
-	  case 2:
-		  printf("[BUSY]");
-		  break;
-	  case 3:
-		  printf("[TIMEOUT]");
-		  break;
-	  default:
-		  printf("[ERR:%d]", result);
-		  break;
-	  }
-  }
-  puts(" QSPI");
-
   /* USER CODE END 2 */
 
   /* Init scheduler */

@@ -96,6 +96,7 @@ FREERTOS.configUSE_STATS_FORMATTING_FUNCTIONS=1
 FREERTOS.configUSE_TRACE_FACILITY=1
 FREERTOS.copyHeapFile=0
 File.Version=6
+GPIO.groupedBy=Group By Peripherals
 I2C1.IPParameters=Timing
 I2C1.Timing=0x20404768
 I2C3.IPParameters=Timing

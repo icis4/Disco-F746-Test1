@@ -48,10 +48,18 @@ void MX_FATFS_Init(void)
   retUSER = FATFS_LinkDriver(&USER_Driver, USERPath);
 
   /* USER CODE BEGIN Init */
-//  retSDRAMDISK = f_mount(&SDRAMDISKFatFS, SDRAMDISKPath, 0);
-//	if (retSDRAMDISK != FR_OK)
-//		return;
-//	retSDRAMDISK = f_mkfs(SDRAMDISKPath, FM_ANY, 0, workBuffer, sizeof(workBuffer));
+  retSDRAMDISK = f_mount(&SDRAMDISKFatFS, SDRAMDISKPath, 0);
+  if (retSDRAMDISK == FR_OK)
+	  while(0) { retSDRAMDISK = f_mkfs(SDRAMDISKPath, FM_ANY, 0, workBuffer, sizeof(workBuffer)); }
+
+  retSD = f_mount(&SDFatFS, SDPath, 0);
+  if (retSD == FR_OK)
+	  while(0) { retSD = f_mkfs(SDRAMDISKPath, FM_ANY, 0, workBuffer, sizeof(workBuffer)); }
+
+  retUSER = f_mount(&USERFatFS, USERPath, 0);
+  if (retUSER == FR_OK)
+	  while(0) { retUSER = f_mkfs(USERPath, FM_ANY, 0, workBuffer, sizeof(workBuffer)); }
+
   /* USER CODE END Init */
 }
 

@@ -13,9 +13,13 @@
 #include "main.h"
 #include "cmsis_os.h"
 
+#include "fatfs.h"
+
 #include "app/application.h"
 #include "app/mcuutils.h"
 
+#include "app/mcuutils.h"
+#include "app/tools.h"
 
 /**
   * @brief  Default task
@@ -31,10 +35,55 @@
   */
 __NO_RETURN void StartDefaultTask(void *argument)
 {
+  extern uint8_t resultQSPI;
   InitApplication();
+
+  printf("\n*** START ***\n");
+
+  /* Flash Disk */
+  if (resultQSPI == HAL_OK) {
+	  printf("[PASS]");
+	  MX_FATFS_Init();
+  } else {
+	  switch(resultQSPI) {
+	  case 0:
+		  printf("[OK]");
+		  break;
+	  case 1:
+		  printf("[ERROR]");
+		  break;
+	  case 2:
+		  printf("[BUSY]");
+		  break;
+	  case 3:
+		  printf("[TIMEOUT]");
+		  break;
+	  default:
+		  printf("[ERR:%d]", resultQSPI);
+		  break;
+	  }
+  }
+  puts(" QSPI");
+
+  if (retSDRAMDISK == FR_OK)
+	  printf("[PASS] RAM Disk %s", SDRAMDISKPath);
+  else
+	  printf("[FAIL:%d] RAM Disk", retSDRAMDISK);
+
+  if (retSD == FR_OK)
+	  printf("[PASS] SD Disk %s", SDPath);
+  else
+	  printf("[FAIL:%d] SD Disk", retSD);
+
+  if (retUSER == FR_OK)
+	  printf("[PASS] USER Disk %s", USERPath);
+  else
+	  printf("[FAIL:%d] USER Disk", retUSER);
+
 
   printf("\nID:%08lx%08lx%08lx\n", HAL_GetUIDw0(), HAL_GetUIDw1(), HAL_GetUIDw2());
   printf("*** Ready ***\n");
+
 
   // vTaskDelete(0);
 

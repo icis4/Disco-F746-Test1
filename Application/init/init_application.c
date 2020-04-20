@@ -15,6 +15,10 @@
 #include "cmsis_os.h"
 
 #include "app/application.h"
+#include "app/tools.h"
+#include "bsp/stm32746g_discovery_qspi.h"
+
+uint8_t resultQSPI;
 
 extern void MX_USB_DEVICE_Init(void);
 extern void MX_FATFS_Init(void);
@@ -23,7 +27,9 @@ result_t InitApplication(void)
 {
 	/* init code for USB_HOST */
 
-	MX_FATFS_Init();
+	configureTimerForDelay_us();
+	resultQSPI = BSP_QSPI_Init();
+	// MX_FATFS_Init();
 
 	return HAL_OK;
 }
