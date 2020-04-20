@@ -36,11 +36,16 @@
 /* Includes ------------------------------------------------------------------*/
 #include <string.h>
 #include "ff_gen_drv.h"
+#include "bsp/stm32746g_discovery_qspi.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+
+/* Block Size in Bytes */
+#define BLOCK_SIZE                512
+
 /* Disk status */
 static volatile DSTATUS Stat = STA_NOINIT;
 
@@ -118,7 +123,14 @@ DRESULT USER_read (
 )
 {
   /* USER CODE BEGIN READ */
-    return RES_OK;
+	  uint8_t user_status = HAL_OK;
+
+	  if(BSP_QSPI_Read(buff, sector * BLOCK_SIZE, BLOCK_SIZE * count) != HAL_OK)
+	  {
+		  user_status = SDRAM_ERROR;
+	  }
+
+	  return user_status;
   /* USER CODE END READ */
 }
 

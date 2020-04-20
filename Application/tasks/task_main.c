@@ -36,53 +36,41 @@
 __NO_RETURN void StartDefaultTask(void *argument)
 {
   extern uint8_t resultQSPI;
-  InitApplication();
-
   printf("\n*** START ***\n");
+  printf("\nID:%08lx%08lx%08lx\n", HAL_GetUIDw0(), HAL_GetUIDw1(), HAL_GetUIDw2());
+
+  InitApplication();
 
   /* Flash Disk */
   if (resultQSPI == HAL_OK) {
 	  printf("[PASS]");
 	  MX_FATFS_Init();
   } else {
-	  switch(resultQSPI) {
-	  case 0:
-		  printf("[OK]");
-		  break;
-	  case 1:
-		  printf("[ERROR]");
-		  break;
-	  case 2:
-		  printf("[BUSY]");
-		  break;
-	  case 3:
-		  printf("[TIMEOUT]");
-		  break;
-	  default:
-		  printf("[ERR:%d]", resultQSPI);
-		  break;
-	  }
+	  printf("[%s]", strresult(resultQSPI));
   }
   puts(" QSPI");
 
   if (retSDRAMDISK == FR_OK)
-	  printf("[PASS] RAM Disk %s", SDRAMDISKPath);
+	  printf("[PASS] RAM Disk %s\n", SDRAMDISKPath);
   else
-	  printf("[FAIL:%d] RAM Disk", retSDRAMDISK);
+	  printf("[FAIL:%d] RAM Disk\n", retSDRAMDISK);
 
   if (retSD == FR_OK)
-	  printf("[PASS] SD Disk %s", SDPath);
+	  printf("[PASS] SD Disk %s\n", SDPath);
   else
-	  printf("[FAIL:%d] SD Disk", retSD);
+	  printf("[FAIL:%d] SD Disk\n", retSD);
 
   if (retUSER == FR_OK)
-	  printf("[PASS] USER Disk %s", USERPath);
+	  printf("[PASS] USER Disk %s\n", USERPath);
   else
-	  printf("[FAIL:%d] USER Disk", retUSER);
+	  printf("[FAIL:%d] USER Disk\n", retUSER);
+
+  uint32_t time = osKernelGetTickCount();
+  BSP_DelayMicros(20000);
+  printf("20000us = %ldms", osKernelGetTickCount() - time);
 
 
-  printf("\nID:%08lx%08lx%08lx\n", HAL_GetUIDw0(), HAL_GetUIDw1(), HAL_GetUIDw2());
-  printf("*** Ready ***\n");
+  printf("\n*** Ready ***\n");
 
 
   // vTaskDelete(0);

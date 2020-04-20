@@ -1,2 +1,5 @@
 LINKER_FLAGS += '-u _printf_float'
 LINKER_FLAGS += '-u _scanf_float'
+
+# Local task storage 16 x 4 bytes
+CFLAGS += '-DconfigNUM_THREAD_LOCAL_STORAGE_POINTERS=16'

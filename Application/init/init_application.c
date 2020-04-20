@@ -29,7 +29,7 @@ result_t InitApplication(void)
 
 	configureTimerForDelay_us();
 	resultQSPI = BSP_QSPI_Init();
-	// MX_FATFS_Init();
+	MX_FATFS_Init();
 
 	return HAL_OK;
 }
