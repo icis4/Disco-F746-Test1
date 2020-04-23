@@ -39,6 +39,9 @@ __NO_RETURN void StartDefaultTask(void *argument)
   printf("\n*** START ***\n");
   printf("\nID:%08lx%08lx%08lx\n", HAL_GetUIDw0(), HAL_GetUIDw1(), HAL_GetUIDw2());
 
+  extern void MX_LWIP_Init(void);
+
+  MX_LWIP_Init();
   InitApplication();
 
   /* Flash Disk */

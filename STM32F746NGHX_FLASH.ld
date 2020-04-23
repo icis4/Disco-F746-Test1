@@ -61,8 +61,13 @@ _Min_Stack_Size = 0x2000 ;	/* required amount of stack */
 /* Memories definition */
 MEMORY
 {
-  RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 320K
-  FLASH    (rx)    : ORIGIN = 0x8000000,   LENGTH = 1024K
+	RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 320K
+	FLASH    (rx)    : ORIGIN = 0x8000000,   LENGTH = 1024K
+	/* Ethernet Buffers */
+/*	Memory_B1(xrw)   : ORIGIN = 0x20010000, LENGTH = 0x80
+	Memory_B2(xrw)   : ORIGIN = 0x20010080, LENGTH = 0x80
+	Memory_B3(xrw)   : ORIGIN = 0x2004C000, LENGTH = 0x17d0 
+	Memory_B4(xrw)   : ORIGIN = 0x2004D7D0, LENGTH = 0x17d0 */ 
 }
 
 /* Sections */
@@ -197,4 +202,9 @@ SECTIONS
   }
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
+  
+/*  .RxDecripSection(NOLOAD) : { *(.RxDescripSection) } >Memory_B1
+  .TxDescripSection(NOLOAD) : { *(.TxDescripSection) } >Memory_B2
+  .RxarraySection(NOLOAD) : { *(.RxBUF) } >Memory_B3
+  .TxarraySection(NOLOAD) : { *(.TxBUF) } >Memory_B4 */
 }
