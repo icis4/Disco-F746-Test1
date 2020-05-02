@@ -36,13 +36,15 @@
 __NO_RETURN void StartDefaultTask(void *argument)
 {
   extern uint8_t resultQSPI;
+
+  InitApplication();
+
   printf("\n*** START ***\n");
   printf("\nID:%08lx%08lx%08lx\n", HAL_GetUIDw0(), HAL_GetUIDw1(), HAL_GetUIDw2());
 
   extern void MX_LWIP_Init(void);
 
   MX_LWIP_Init();
-  InitApplication();
 
   /* Flash Disk */
   if (resultQSPI == HAL_OK) {
@@ -68,15 +70,14 @@ __NO_RETURN void StartDefaultTask(void *argument)
   else
 	  printf("[FAIL:%d] USER Disk\n", retUSER);
 
-  uint32_t time = osKernelGetTickCount();
-  BSP_DelayMicros(20000);
-  printf("20000us = %ldms", osKernelGetTickCount() - time);
-
+//  uint32_t time = osKernelGetTickCount();
+//  BSP_DelayMicros(20000);
+//  printf("20000us = %ldms", osKernelGetTickCount() - time);
 
   printf("\n*** Ready ***\n");
 
-  extern int duktape_main();
-  duktape_main();
+//  extern int duktape_main();
+//  duktape_main();
 
   // vTaskDelete(0);
 
