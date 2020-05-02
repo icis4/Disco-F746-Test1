@@ -8,5 +8,5 @@ Stm32CubeIDE Template for Disco F746
 ### Stm32CubeProgrammer 2.3.1
 
 
-### Ping static address 
+### LCD Log 
 ![lcd_log](images/lcd_log.jpg)
