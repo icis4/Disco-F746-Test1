@@ -38,7 +38,7 @@ result_t InitApplication(void)
 	BSP_LCD_LayerRgb565Init(0, LCD_FB_START_ADDRESS);
 	BSP_LCD_DisplayOn();
 	BSP_LCD_SelectLayer(0);
-	BSP_LCD_Clear(LCD_COLOR_BLUE);
+//	BSP_LCD_Clear(LCD_COLOR_BLUE);
 //	BSP_LCD_SetTransparency(0, 100);
 //	BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
 //	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
@@ -46,8 +46,8 @@ result_t InitApplication(void)
 //	BSP_LCD_DisplayStringAtLine(0, "Baf Maamu!");
 
 	LCD_LOG_Init();
-	LCD_LOG_SetHeader("STM32F746G-DISCO");
-	LCD_LOG_SetFooter("(c) 2020 Ivaylo Ilchev");
+	LCD_LOG_SetHeader((uint8_t*)"STM32F746G-DISCO");
+	LCD_LOG_SetFooter((uint8_t*)"(c) 2020 Ivaylo Ilchev");
 
 	return HAL_OK;
 }

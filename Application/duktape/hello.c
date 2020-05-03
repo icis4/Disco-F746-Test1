@@ -90,13 +90,16 @@ int duktape_main()
 	duk_push_c_function(ctx, native_adder, DUK_VARARGS);
 	duk_put_global_string(ctx, "adder");
 
+	printf("*** JavaScript ***\n");
+
 	duk_eval_string(ctx, "print('Hello world!');");
 
 	duk_eval_string(ctx, "print('2+3=' + adder(2, 3));");
-	duk_eval_string(ctx, mandel);
+	// duk_eval_string(ctx, mandel);
 	duk_pop(ctx);  /* pop eval result */
 
 	duk_destroy_heap(ctx);
+	printf("=== JavaScript ===\n");
 
 	return 0;
 }

@@ -76,8 +76,8 @@ __NO_RETURN void StartDefaultTask(void *argument)
 
   printf("\n*** Ready ***\n");
 
-//  extern int duktape_main();
-//  duktape_main();
+  extern int duktape_main();
+  duktape_main();
 
   // vTaskDelete(0);
 
