@@ -60,12 +60,13 @@ void fractal(float left, float top, float xside, float yside)
     // where required image will be seen
     BSP_LCD_SetTextColor(LCD_COLOR_RED);
     BSP_LCD_DrawRect(0, 0, maxx, maxy);
+//    BSP_LCD_DrawHLine(0, 0, maxx + 1);
 
     // scanning every point in that rectangular area.
     // Each point represents a Complex number (x + yi).
     // Iterate that complex number
-    for (y = 1; y <= maxy - 1; y++) {
-        for (x = 1; x <= maxx - 1; x++)
+    for (y = 0; y <= maxy ; y++) {
+        for (x = 0; x <= maxx; x++)
         {
             // c_real
             cx = x * xscale + left;
@@ -121,7 +122,7 @@ void test_fractal() {
 // for the screen and image to be displayed
 	left = -1.75;
 	top = -0.25;
-	xside = 0.25;
+	xside = 0.45;
 	yside = 0.45;
 	uint32_t time = osKernelGetTickCount();
 	fractal(left, top, xside, yside);
