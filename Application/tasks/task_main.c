@@ -79,6 +79,10 @@ __NO_RETURN void StartDefaultTask(void *argument)
   extern int duktape_main();
   duktape_main();
 
+  void test_fractal();
+
+  test_fractal();
+
   // vTaskDelete(0);
 
   /* Infinite loop */

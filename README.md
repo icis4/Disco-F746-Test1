@@ -10,3 +10,7 @@ Stm32CubeIDE Template for Disco F746
 
 ### LCD Log 
 ![lcd_log](images/lcd_log.jpg)
+
+### C Fractal 
+![lcd_c_fractal](images/lcd_c_fractal.jpg)
+
