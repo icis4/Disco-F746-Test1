@@ -900,6 +900,25 @@ void BSP_LCD_DrawRect(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Hei
 }
 
 /**
+  * @brief  Draws a rectangle.
+  * @param  Left: X position
+  * @param  Top:  Y position
+  * @param  Right: X position
+  * @param  Bottom: Y position
+  * @retval None
+  */
+void BSP_LCD_DrawRectEx(uint16_t Left, uint16_t Top, uint16_t Right, uint16_t Bottom)
+{
+  /* Draw horizontal lines */
+  BSP_LCD_DrawHLine(Left, Top, Right - Left + 1);
+  BSP_LCD_DrawHLine(Left, Bottom, Right - Left + 1);
+
+  /* Draw vertical lines */
+  BSP_LCD_DrawVLine(Left, Top, Bottom - Top);
+  BSP_LCD_DrawVLine(Right, Top, Bottom - Top);
+}
+
+/**
   * @brief  Draws a circle.
   * @param  Xpos: X position
   * @param  Ypos: Y position

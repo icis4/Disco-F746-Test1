@@ -1,15 +1,11 @@
 /*
- * fractals.c
+ * fractals.js
  *
  *  Created on: May 3, 2020
  *      Author: icis4
  */
-#include <stdio.h>
-#include "FreeRTOS.h"
-#include "cmsis_os.h"
-#include "bsp/stm32746g_discovery_lcd.h"
 
-static uint32_t colors[] = {
+colors = Array(
 	LCD_COLOR_BLACK,
 	LCD_COLOR_DARKBLUE,
 	LCD_COLOR_DARKGREEN,
@@ -35,17 +31,15 @@ static uint32_t colors[] = {
 	LCD_COLOR_LIGHTYELLOW,
 	LCD_COLOR_LIGHTGRAY,
 	LCD_COLOR_WHITE,
-};
+);
 
 #define MAXCOUNT sizeof(colors)
 
-
-// Function to draw mandelbrot set
-void fractal(float left, float top, float xside, float yside)
+function fractal(left, top, xside, yside)
 {
-    float xscale, yscale, zx, zy, cx, tempx, cy;
-    int x, y;
-    int maxx, maxy, count;
+    var xscale, yscale, zx, zy, cx, tempx, cy;
+    var x, y;
+    var maxx, maxy, count;
 
     // getting maximum value of x-axis of screen
     maxx = BSP_LCD_GetXSize() - 1;
@@ -59,16 +53,15 @@ void fractal(float left, float top, float xside, float yside)
 
     // calling rectangle function
     // where required image will be seen
-    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-    BSP_LCD_DrawRectEx(0, 0, maxx, maxy);
-    BSP_LCD_DrawRectEx(1, 1, maxx-1, maxy-1);
-    BSP_LCD_DrawRectEx(2, 2, maxx-2, maxy-2);
+    BSP_LCD_SetTextColor(LCD_COLOR_RED);
+    BSP_LCD_DrawRect(0, 0, maxx, maxy);
+//    BSP_LCD_DrawHLine(0, 0, maxx + 1);
 
     // scanning every point in that rectangular area.
     // Each point represents a Complex number (x + yi).
     // Iterate that complex number
-    for (y = 3; y <= maxy-3 ; y++) {
-        for (x = 3; x <= maxx-3; x++)
+    for (y = 0; y <= maxy ; y++) {
+        for (x = 0; x <= maxx; x++)
         {
             // c_real
             cx = x * xscale + left;
@@ -131,7 +124,7 @@ void test_fractal() {
 	sprintf(sbuff,"  C Mandelbrot time: %ldms", osKernelGetTickCount() - time);
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(10, LINE(1), (uint8_t*)sbuff, LEFT_MODE);
+	BSP_LCD_DisplayStringAtLine(1, (uint8_t*)sbuff);
 	sprintf(sbuff,"  https://www.geeksforgeeks.org/fractals-in-cc/");
-	BSP_LCD_DisplayStringAt(10, LINE(2), (uint8_t*)sbuff, LEFT_MODE);
+	BSP_LCD_DisplayStringAtLine(2, (uint8_t*)sbuff);
 }

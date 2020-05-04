@@ -14,3 +14,13 @@ Stm32CubeIDE Template for Disco F746
 ### C Fractal 
 ![lcd_c_fractal](images/lcd_c_fractal.jpg)
 
+### BSP_LCD_DrawRect bug 
+
+![lcd_rect_bug](images/lcd_rect_bug.jpg)
+
+
+New function created BSP_LCD_DrawRect
+
+
+![lcd_rect_no_bug](images/lcd_rect_no_bug.jpg)
+ 
