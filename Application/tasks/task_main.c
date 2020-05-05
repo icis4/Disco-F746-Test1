@@ -21,6 +21,11 @@
 #include "app/mcuutils.h"
 #include "app/tools.h"
 
+extern uint8_t resultQSPI;
+
+extern void MX_LWIP_Init(void);
+extern int diskfree(char* path, DWORD *total_kb, DWORD *free_kb);
+
 /**
   * @brief  Default task
   *         @note
@@ -35,14 +40,11 @@
   */
 __NO_RETURN void StartDefaultTask(void *argument)
 {
-  extern uint8_t resultQSPI;
 
   InitApplication();
 
   printf("\n*** START ***\n");
   printf("\nID:%08lx%08lx%08lx\n", HAL_GetUIDw0(), HAL_GetUIDw1(), HAL_GetUIDw2());
-
-  extern void MX_LWIP_Init(void);
 
   MX_LWIP_Init();
 
@@ -88,20 +90,25 @@ __NO_RETURN void StartDefaultTask(void *argument)
   test_fractal();
 #endif
 
-#if 1
-	//NOT FINE!
-	/* FATfs */
-	extern int diskfree(DWORD *total_kb, DWORD *free_kb);
-
 	DWORD total_kb, free_kb;
+	int result;
 
-	diskfree(&total_kb, &free_kb);
+	printf("\n- DiskFree -\n");
 
-	/* Print the free space (assuming 512 bytes/sector) */
-	printf("\n- DiskFree -\n%lu KiB total drive space.\n%lu KiB available.\n",
-			total_kb, free_kb);
-#endif
+	/* FATfs RAM Disk*/
+	result = diskfree(SDRAMDISKPath, &total_kb, &free_kb);
+	if (!result) printf("%s - %lu KiB total drive space. %lu KiB available.\n", SDRAMDISKPath, total_kb, free_kb);
+	else printf("%s - Error!\n", SDRAMDISKPath);
 
+	/* FATfs SD Card */
+	result = diskfree(SDPath, &total_kb, &free_kb);
+	if (!result) printf("%s - %lu MiB total drive space. %lu MiB available.\n", SDPath, total_kb / 1024, free_kb / 1024);
+	else printf("%s - Error!\n", SDPath);
+
+	/* FATfs Flash Disk*/
+	result = diskfree(USERPath, &total_kb, &free_kb);
+	if (!result) printf("%s -%lu KiB total drive space. %lu KiB available.\n", USERPath, total_kb, free_kb);
+	else printf("%s - Error!\n", USERPath);
 
   // vTaskDelete(0);
 
