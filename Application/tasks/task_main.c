@@ -76,12 +76,32 @@ __NO_RETURN void StartDefaultTask(void *argument)
 
   printf("\n*** Ready ***\n");
 
+#if 0
+  //FINE!
   extern int duktape_main();
   duktape_main();
+#endif
 
+#if 0
+  //FINE!
   void test_fractal();
-
   test_fractal();
+#endif
+
+#if 1
+	//NOT FINE!
+	/* FATfs */
+	extern int diskfree(DWORD *total_kb, DWORD *free_kb);
+
+	DWORD total_kb, free_kb;
+
+	diskfree(&total_kb, &free_kb);
+
+	/* Print the free space (assuming 512 bytes/sector) */
+	printf("\n- DiskFree -\n%lu KiB total drive space.\n%lu KiB available.\n",
+			total_kb, free_kb);
+#endif
+
 
   // vTaskDelete(0);
 

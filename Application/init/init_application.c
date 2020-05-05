@@ -26,14 +26,8 @@ uint8_t resultQSPI;
 extern void MX_USB_DEVICE_Init(void);
 extern void MX_FATFS_Init(void);
 
-result_t InitApplication(void)
+result_t InitLCD(void)
 {
-	/* init code for USB_HOST */
-
-	configureTimerForDelay_us();
-	resultQSPI = BSP_QSPI_Init();
-	// MX_FATFS_Init();
-
 	BSP_LCD_Init();
 	BSP_LCD_LayerRgb565Init(0, LCD_FB_START_ADDRESS);
 	BSP_LCD_DisplayOn();
@@ -48,6 +42,17 @@ result_t InitApplication(void)
 	LCD_LOG_Init();
 	LCD_LOG_SetHeader((uint8_t*)"STM32F746G-DISCO");
 	LCD_LOG_SetFooter((uint8_t*)"(c) 2020 Ivaylo Ilchev");
-
-	return HAL_OK;
 }
+
+result_t InitApplication(void)
+{
+	result_t result;
+	configureTimerForDelay_us();
+	resultQSPI = BSP_QSPI_Init();
+	result = InitLCD();
+
+	MX_FATFS_Init();
+
+	return result;
+}
+
