@@ -19,7 +19,7 @@ Stm32CubeIDE Template for Disco F746
 ![lcd_rect_bug](images/lcd_rect_bug.jpg)
 
 
-New function created BSP_LCD_DrawRect
+New function created BSP_LCD_DrawRectEx
 
 
 ![lcd_rect_no_bug](images/lcd_rect_no_bug.jpg)
