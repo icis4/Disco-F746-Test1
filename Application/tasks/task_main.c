@@ -7,6 +7,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
+#include <errno.h>
 
 #include "FreeRTOS.h"
 #include "task.h"
@@ -107,8 +108,8 @@ __NO_RETURN void StartDefaultTask(void *argument)
 
 	/* FATfs Flash Disk*/
 	result = diskfree(USERPath, &total_kb, &free_kb);
-	if (!result) printf("%s -%lu KiB total drive space. %lu KiB available.\n", USERPath, total_kb, free_kb);
-	else printf("%s - Error!\n", USERPath);
+	if (!result) printf("%s - %lu KiB total drive space. %lu KiB available.\n", USERPath, total_kb, free_kb);
+	else printf("%s - Error:%d\n", USERPath, errno);
 
   // vTaskDelete(0);
 

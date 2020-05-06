@@ -36,6 +36,8 @@ FIL USERFile;       /* File object for USER */
 
 uint8_t workBuffer[_MAX_SS];
 
+extern int diskfree(char* path, DWORD *total_kb, DWORD *free_kb);
+
 /* USER CODE END Variables */    
 
 void MX_FATFS_Init(void) 
@@ -56,10 +58,16 @@ void MX_FATFS_Init(void)
   if (retSD == FR_OK)
 	  if(0) { retSD = f_mkfs(SDRAMDISKPath, FM_ANY, 0, workBuffer, sizeof(workBuffer)); }
 
+  DWORD total_kb, free_kb;
   retUSER = f_mount(&USERFatFS, USERPath, 0);
-  if (retUSER == FR_OK)
-	  if(0) { retUSER = f_mkfs(USERPath, FM_ANY, 0, workBuffer, sizeof(workBuffer)); }
-
+  if (retUSER == FR_OK) {
+	  if(diskfree(USERPath, &total_kb, &free_kb) != 0) {
+		  retUSER = f_mkfs(USERPath, FM_ANY, 0, workBuffer, sizeof(workBuffer));
+		  retUSER = diskfree(USERPath, &total_kb, &free_kb);
+	  } else {
+		  retUSER = FR_OK;
+	  }
+  }
   /* USER CODE END Init */
 }
 

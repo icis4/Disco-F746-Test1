@@ -38,13 +38,16 @@
 #include "ff_gen_drv.h"
 #include "bsp/stm32746g_discovery_qspi.h"
 
+extern uint8_t resultQSPI;
+
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
 
 /* Block Size in Bytes */
-#define BLOCK_SIZE                512
+#define BLOCK_SIZE                4096
+#define FLASH_DEVICE_SIZE  ((uint32_t)0x1000000)  /* Flash size in MBytes */
 
 /* Disk status */
 static volatile DSTATUS Stat = STA_NOINIT;
@@ -87,7 +90,9 @@ DSTATUS USER_initialize (
 )
 {
   /* USER CODE BEGIN INIT */
-    Stat = STA_NOINIT;
+	  if (resultQSPI == HAL_OK) {
+			Stat &= ~STA_NOINIT;
+	  }
     return Stat;
   /* USER CODE END INIT */
 }
@@ -102,7 +107,6 @@ DSTATUS USER_status (
 )
 {
   /* USER CODE BEGIN STATUS */
-    Stat = STA_NOINIT;
     return Stat;
   /* USER CODE END STATUS */
 }
@@ -123,14 +127,12 @@ DRESULT USER_read (
 )
 {
   /* USER CODE BEGIN READ */
-	  uint8_t user_status = HAL_OK;
-
 	  if(BSP_QSPI_Read(buff, sector * BLOCK_SIZE, BLOCK_SIZE * count) != HAL_OK)
 	  {
-		  user_status = SDRAM_ERROR;
+		  return RES_ERROR;
 	  }
 
-	  return user_status;
+	  return RES_OK;
   /* USER CODE END READ */
 }
 
@@ -151,6 +153,17 @@ DRESULT USER_write (
 )
 { 
   /* USER CODE BEGIN WRITE */
+	uint8_t user_status = HAL_OK;
+	for (int i = 0; i < count; i++) {
+		user_status = BSP_QSPI_Erase_Block((sector + i) * BLOCK_SIZE);
+		if (user_status != HAL_OK)
+			return RES_WRPRT;
+	}
+
+	user_status = BSP_QSPI_Write((uint8_t*)buff, sector * BLOCK_SIZE, BLOCK_SIZE * count);
+	if (user_status != HAL_OK)
+		return RES_WRPRT;
+
   /* USER CODE HERE */
     return RES_OK;
   /* USER CODE END WRITE */
@@ -172,8 +185,40 @@ DRESULT USER_ioctl (
 )
 {
   /* USER CODE BEGIN IOCTL */
-    DRESULT res = RES_ERROR;
-    return res;
+	  DRESULT res = RES_ERROR;
+
+	  if (Stat & STA_NOINIT) return RES_NOTRDY;
+
+	  switch (cmd)
+	  {
+	  /* Make sure that no pending write process */
+	  case CTRL_SYNC :
+	    res = RES_OK;
+	    break;
+
+	  /* Get number of sectors on the disk (DWORD) */
+	  case GET_SECTOR_COUNT :
+	    *(DWORD*)buff = FLASH_DEVICE_SIZE / BLOCK_SIZE;
+	    res = RES_OK;
+	    break;
+
+	  /* Get R/W sector size (WORD) */
+	  case GET_SECTOR_SIZE :
+	    *(WORD*)buff = BLOCK_SIZE;
+	    res = RES_OK;
+	    break;
+
+	  /* Get erase block size in unit of sector (DWORD) */
+	  case GET_BLOCK_SIZE :
+	    *(DWORD*)buff = 1;
+		res = RES_OK;
+	    break;
+
+	  default:
+	    res = RES_PARERR;
+	  }
+
+	  return res;
   /* USER CODE END IOCTL */
 }
 #endif /* _USE_IOCTL == 1 */

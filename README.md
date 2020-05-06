@@ -24,3 +24,8 @@ New function created BSP_LCD_DrawRectEx
 
 ![lcd_rect_no_bug](images/lcd_rect_no_bug.jpg)
  
+
+### All drives OK 
+
+![all_drives_ok](images/all_drives_ok.jpg)
+ 
