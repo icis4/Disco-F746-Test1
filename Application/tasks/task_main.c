@@ -111,6 +111,11 @@ __NO_RETURN void StartDefaultTask(void *argument)
 	if (!result) printf("%s - %lu KiB total drive space. %lu KiB available.\n", USERPath, total_kb, free_kb);
 	else printf("%s - Error:%d\n", USERPath, errno);
 
+	#if 1
+	  extern int duktape_main();
+	  duktape_main();
+	#endif
+
   // vTaskDelete(0);
 
   /* Infinite loop */
