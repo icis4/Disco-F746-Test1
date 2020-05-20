@@ -32,6 +32,8 @@ FATFS USERFatFS;    /* File system object for USER logical drive */
 FIL USERFile;       /* File object for USER */
 
 /* USER CODE BEGIN Variables */
+#include <stdlib.h>
+#include <stdio.h>
 #include "rtc.h"
 
 uint8_t workBuffer[_MAX_SS];
@@ -50,6 +52,12 @@ void MX_FATFS_Init(void)
   retUSER = FATFS_LinkDriver(&USER_Driver, USERPath);
 
   /* USER CODE BEGIN Init */
+  FATFS* fs;
+  fs = malloc(sizeof(FATFS));
+  f_mount(fs, "", 0); /* Mount default drive */
+  f_mount(NULL, "", 0); /* Unmount default drive */
+  free(fs);
+
   retSDRAMDISK = f_mount(&SDRAMDISKFatFS, SDRAMDISKPath, 0);
   if (retSDRAMDISK == FR_OK)
 	  retSDRAMDISK = f_mkfs(SDRAMDISKPath, FM_ANY, 0, workBuffer, sizeof(workBuffer));
@@ -58,16 +66,13 @@ void MX_FATFS_Init(void)
   if (retSD == FR_OK)
 	  if(0) { retSD = f_mkfs(SDRAMDISKPath, FM_ANY, 0, workBuffer, sizeof(workBuffer)); }
 
-  DWORD total_kb, free_kb;
-  retUSER = f_mount(&USERFatFS, USERPath, 0);
-  if (retUSER == FR_OK) {
-	  if(diskfree(USERPath, &total_kb, &free_kb) != 0) {
-		  retUSER = f_mkfs(USERPath, FM_ANY, 0, workBuffer, sizeof(workBuffer));
-		  retUSER = diskfree(USERPath, &total_kb, &free_kb);
-	  } else {
-		  retUSER = FR_OK;
-	  }
-  }
+  retUSER = f_mount(&USERFatFS, USERPath, 1);
+//  if (retUSER != FR_OK) {
+//	  printf("\nFormat %s ...", USERPath);
+//	  retUSER = f_mkfs(USERPath, FM_ANY, 0, workBuffer, sizeof(workBuffer));
+//	  printf("%s\n", (retUSER)? "Fail":"Done");
+//  }
+
   /* USER CODE END Init */
 }
 

@@ -111,9 +111,20 @@ __NO_RETURN void StartDefaultTask(void *argument)
 	if (!result) printf("%s - %lu KiB total drive space. %lu KiB available.\n", USERPath, total_kb, free_kb);
 	else printf("%s - Error:%d\n", USERPath, errno);
 
-	#if 1
+	#if 0
 	  extern int duktape_main();
 	  duktape_main();
+	#endif
+
+	#if 1
+	  FIL fp;
+	  UINT bw;
+	  FSIZE_t size;
+	  f_open(&fp, "2:/log.txt", FA_OPEN_APPEND | FA_WRITE);
+	  f_write(&fp, "1234\n", 5, &bw);
+	  size = f_size(&fp);
+	  printf("bw:%d, size:%ld\n", bw, size);
+	  f_close(&fp);
 	#endif
 
   // vTaskDelete(0);

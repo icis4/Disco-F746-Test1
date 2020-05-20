@@ -46,8 +46,10 @@ extern uint8_t resultQSPI;
 /* Private variables ---------------------------------------------------------*/
 
 /* Block Size in Bytes */
-#define BLOCK_SIZE                4096
-#define FLASH_DEVICE_SIZE  ((uint32_t)0x1000000)  /* Flash size in MBytes */
+#define BLOCK_SIZE                N25Q128A_SUBSECTOR_SIZE
+#define FLASH_DEVICE_SIZE  ((uint32_t)N25Q128A_FLASH_SIZE)  /* Flash size in MBytes */
+/* Keep 0 Flash for system */
+#define FLASH_DEVICE_OFFSET  ((uint32_t)0x0)
 
 /* Disk status */
 static volatile DSTATUS Stat = STA_NOINIT;
@@ -90,7 +92,8 @@ DSTATUS USER_initialize (
 )
 {
   /* USER CODE BEGIN INIT */
-	  if (resultQSPI == HAL_OK) {
+	  resultQSPI = BSP_QSPI_Init();
+	  if (resultQSPI == QSPI_OK) {
 			Stat &= ~STA_NOINIT;
 	  }
     return Stat;
