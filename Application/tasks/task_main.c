@@ -24,7 +24,6 @@
 
 extern uint8_t resultQSPI;
 
-extern void MX_LWIP_Init(void);
 extern int diskfree(char* path, DWORD *total_kb, DWORD *free_kb);
 
 /**
@@ -47,12 +46,9 @@ __NO_RETURN void StartDefaultTask(void *argument)
   printf("\n*** START ***\n");
   printf("\nID:%08lx%08lx%08lx\n", HAL_GetUIDw0(), HAL_GetUIDw1(), HAL_GetUIDw2());
 
-  MX_LWIP_Init();
-
   /* Flash Disk */
   if (resultQSPI == HAL_OK) {
 	  printf("[PASS]");
-	  MX_FATFS_Init();
   } else {
 	  printf("[%s]", strresult(resultQSPI));
   }
@@ -108,8 +104,10 @@ __NO_RETURN void StartDefaultTask(void *argument)
 
 	/* FATfs Flash Disk*/
 	result = diskfree(USERPath, &total_kb, &free_kb);
-	if (!result) printf("%s - %lu KiB total drive space. %lu KiB available.\n", USERPath, total_kb, free_kb);
-	else printf("%s - Error:%d\n", USERPath, errno);
+	if (result == HAL_OK)
+		printf("%s - %lu KiB total drive space. %lu KiB available.\n", USERPath, total_kb, free_kb);
+	else
+		printf("%s - Error:%d\n", USERPath, errno);
 
 	#if 0
 	  extern int duktape_main();
@@ -123,7 +121,7 @@ __NO_RETURN void StartDefaultTask(void *argument)
 	  f_open(&fp, "2:/log.txt", FA_OPEN_APPEND | FA_WRITE);
 	  f_write(&fp, "1234\n", 5, &bw);
 	  size = f_size(&fp);
-	  printf("bw:%d, size:%ld\n", bw, size);
+	  printf("bw:%d, size:%lld\n", bw, size);
 	  f_close(&fp);
 	#endif
 

@@ -41,7 +41,7 @@ void MX_TIM1_Init(void)
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 0;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 0;
+  htim1.Init.Period = 65535;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -104,7 +104,7 @@ void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 0;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 0;
+  htim3.Init.Period = 65535;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
@@ -147,7 +147,7 @@ void MX_TIM5_Init(void)
   htim5.Instance = TIM5;
   htim5.Init.Prescaler = 0;
   htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim5.Init.Period = 0;
+  htim5.Init.Period = 4294967295;
   htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim5) != HAL_OK)
@@ -189,7 +189,7 @@ void MX_TIM8_Init(void)
   htim8.Instance = TIM8;
   htim8.Init.Prescaler = 0;
   htim8.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim8.Init.Period = 0;
+  htim8.Init.Period = 65535;
   htim8.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim8.Init.RepetitionCounter = 0;
   htim8.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -219,7 +219,7 @@ void MX_TIM12_Init(void)
   htim12.Instance = TIM12;
   htim12.Init.Prescaler = 0;
   htim12.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim12.Init.Period = 0;
+  htim12.Init.Period = 65535;
   htim12.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim12.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_PWM_Init(&htim12) != HAL_OK)
@@ -312,8 +312,8 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
 
   /* USER CODE END TIM1_MspPostInit 0 */
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**TIM1 GPIO Configuration    
-    PA8     ------> TIM1_CH1 
+    /**TIM1 GPIO Configuration
+    PA8     ------> TIM1_CH1
     */
     GPIO_InitStruct.Pin = ARDUINO_PWM_D10_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -331,10 +331,10 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
   /* USER CODE BEGIN TIM3_MspPostInit 0 */
 
   /* USER CODE END TIM3_MspPostInit 0 */
-  
+
     __HAL_RCC_GPIOB_CLK_ENABLE();
-    /**TIM3 GPIO Configuration    
-    PB4     ------> TIM3_CH1 
+    /**TIM3 GPIO Configuration
+    PB4     ------> TIM3_CH1
     */
     GPIO_InitStruct.Pin = ARDUINO_PWM_D3_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -352,10 +352,10 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
   /* USER CODE BEGIN TIM5_MspPostInit 0 */
 
   /* USER CODE END TIM5_MspPostInit 0 */
-  
+
     __HAL_RCC_GPIOI_CLK_ENABLE();
-    /**TIM5 GPIO Configuration    
-    PI0     ------> TIM5_CH4 
+    /**TIM5 GPIO Configuration
+    PI0     ------> TIM5_CH4
     */
     GPIO_InitStruct.Pin = ARDUINO_PWM_CS_D5_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -373,10 +373,10 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
   /* USER CODE BEGIN TIM12_MspPostInit 0 */
 
   /* USER CODE END TIM12_MspPostInit 0 */
-  
+
     __HAL_RCC_GPIOH_CLK_ENABLE();
-    /**TIM12 GPIO Configuration    
-    PH6     ------> TIM12_CH1 
+    /**TIM12 GPIO Configuration
+    PH6     ------> TIM12_CH1
     */
     GPIO_InitStruct.Pin = ARDUINO_PWM_D6_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -455,7 +455,7 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
 
   /* USER CODE END TIM12_MspDeInit 1 */
   }
-} 
+}
 
 /* USER CODE BEGIN 1 */
 

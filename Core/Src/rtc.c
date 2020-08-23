@@ -33,7 +33,7 @@ void MX_RTC_Init(void)
   RTC_DateTypeDef sDate = {0};
   RTC_AlarmTypeDef sAlarm = {0};
 
-  /** Initialize RTC Only 
+  /** Initialize RTC Only
   */
   hrtc.Instance = RTC;
   hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
@@ -51,7 +51,7 @@ void MX_RTC_Init(void)
     
   /* USER CODE END Check_RTC_BKUP */
 
-  /** Initialize RTC and set the Time and Date 
+  /** Initialize RTC and set the Time and Date
   */
   sTime.Hours = 0x0;
   sTime.Minutes = 0x0;
@@ -70,7 +70,7 @@ void MX_RTC_Init(void)
   {
     Error_Handler();
   }
-  /** Enable the Alarm A 
+  /** Enable the Alarm A
   */
   sAlarm.AlarmTime.Hours = 0x0;
   sAlarm.AlarmTime.Minutes = 0x0;
@@ -87,15 +87,14 @@ void MX_RTC_Init(void)
   {
     Error_Handler();
   }
-  /** Enable the Alarm B 
+  /** Enable the Alarm B
   */
-  sAlarm.AlarmDateWeekDay = 0x1;
   sAlarm.Alarm = RTC_ALARM_B;
   if (HAL_RTC_SetAlarm(&hrtc, &sAlarm, RTC_FORMAT_BCD) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Enable the TimeStamp 
+  /** Enable the TimeStamp
   */
   if (HAL_RTCEx_SetTimeStamp(&hrtc, RTC_TIMESTAMPEDGE_RISING, RTC_TIMESTAMPPIN_POS1) != HAL_OK)
   {
@@ -134,7 +133,7 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef* rtcHandle)
 
   /* USER CODE END RTC_MspDeInit 1 */
   }
-} 
+}
 
 /* USER CODE BEGIN 1 */
 

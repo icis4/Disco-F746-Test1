@@ -80,12 +80,12 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
   /* USER CODE BEGIN USB_OTG_FS_MspInit 0 */
 
   /* USER CODE END USB_OTG_FS_MspInit 0 */
-  
+
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**USB_OTG_FS GPIO Configuration    
+    /**USB_OTG_FS GPIO Configuration
     PA12     ------> USB_OTG_FS_DP
     PA11     ------> USB_OTG_FS_DM
-    PA10     ------> USB_OTG_FS_ID 
+    PA10     ------> USB_OTG_FS_ID
     */
     GPIO_InitStruct.Pin = OTG_FS_P_Pin|OTG_FS_N_Pin|OTG_FS_ID_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -109,12 +109,12 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
   /* USER CODE BEGIN USB_OTG_HS_MspInit 0 */
 
   /* USER CODE END USB_OTG_HS_MspInit 0 */
-  
+
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOH_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**USB_OTG_HS GPIO Configuration    
+    /**USB_OTG_HS GPIO Configuration
     PB5     ------> USB_OTG_HS_ULPI_D7
     PH4     ------> USB_OTG_HS_ULPI_NXT
     PB13     ------> USB_OTG_HS_ULPI_D6
@@ -126,9 +126,9 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
     PA3     ------> USB_OTG_HS_ULPI_D0
     PB1     ------> USB_OTG_HS_ULPI_D2
     PB0     ------> USB_OTG_HS_ULPI_D1
-    PB11     ------> USB_OTG_HS_ULPI_D4 
+    PB11     ------> USB_OTG_HS_ULPI_D4
     */
-    GPIO_InitStruct.Pin = ULPI_D7_Pin|ULPI_D6_Pin|ULPI_D5_Pin|ULPI_D3_Pin 
+    GPIO_InitStruct.Pin = ULPI_D7_Pin|ULPI_D6_Pin|ULPI_D5_Pin|ULPI_D3_Pin
                           |ULPI_D2_Pin|ULPI_D1_Pin|ULPI_D4_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -176,11 +176,11 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* pcdHandle)
   /* USER CODE END USB_OTG_FS_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_USB_OTG_FS_CLK_DISABLE();
-  
-    /**USB_OTG_FS GPIO Configuration    
+
+    /**USB_OTG_FS GPIO Configuration
     PA12     ------> USB_OTG_FS_DP
     PA11     ------> USB_OTG_FS_DM
-    PA10     ------> USB_OTG_FS_ID 
+    PA10     ------> USB_OTG_FS_ID
     */
     HAL_GPIO_DeInit(GPIOA, OTG_FS_P_Pin|OTG_FS_N_Pin|OTG_FS_ID_Pin);
 
@@ -198,8 +198,8 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* pcdHandle)
     /* Peripheral clock disable */
     __HAL_RCC_USB_OTG_HS_CLK_DISABLE();
     __HAL_RCC_USB_OTG_HS_ULPI_CLK_DISABLE();
-  
-    /**USB_OTG_HS GPIO Configuration    
+
+    /**USB_OTG_HS GPIO Configuration
     PB5     ------> USB_OTG_HS_ULPI_D7
     PH4     ------> USB_OTG_HS_ULPI_NXT
     PB13     ------> USB_OTG_HS_ULPI_D6
@@ -211,9 +211,9 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* pcdHandle)
     PA3     ------> USB_OTG_HS_ULPI_D0
     PB1     ------> USB_OTG_HS_ULPI_D2
     PB0     ------> USB_OTG_HS_ULPI_D1
-    PB11     ------> USB_OTG_HS_ULPI_D4 
+    PB11     ------> USB_OTG_HS_ULPI_D4
     */
-    HAL_GPIO_DeInit(GPIOB, ULPI_D7_Pin|ULPI_D6_Pin|ULPI_D5_Pin|ULPI_D3_Pin 
+    HAL_GPIO_DeInit(GPIOB, ULPI_D7_Pin|ULPI_D6_Pin|ULPI_D5_Pin|ULPI_D3_Pin
                           |ULPI_D2_Pin|ULPI_D1_Pin|ULPI_D4_Pin);
 
     HAL_GPIO_DeInit(ULPI_NXT_GPIO_Port, ULPI_NXT_Pin);
@@ -226,7 +226,7 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* pcdHandle)
 
   /* USER CODE END USB_OTG_HS_MspDeInit 1 */
   }
-} 
+}
 
 /* USER CODE BEGIN 1 */
 

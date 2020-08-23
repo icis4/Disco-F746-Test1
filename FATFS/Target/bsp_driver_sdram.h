@@ -1,7 +1,7 @@
 /**
  ******************************************************************************
   * @file    bsp_driver_sdram.h (based on stm32756g_eval_sdram.h)
-  * @brief   This file contains the common defines and functions prototypes for  
+  * @brief   This file contains the common defines and functions prototypes for
   *          the bsp_driver_sdram.c driver.
   ******************************************************************************
   * @attention
@@ -16,14 +16,14 @@
   *
   ******************************************************************************
   */
-  
+
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F7_SDRAM_H
 #define __STM32F7_SDRAM_H
 
 #ifdef __cplusplus
  extern "C" {
-#endif 
+#endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f7xx_hal.h"
@@ -90,7 +90,7 @@ uint8_t BSP_SDRAM_WriteData_DMA(uint32_t uwStartAddress, uint32_t *pData, uint32
 uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd);
 
 /* USER CODE END 0 */
-   
+
 #ifdef __cplusplus
 }
 #endif

@@ -40,9 +40,9 @@ uint8_t workBuffer[_MAX_SS];
 
 extern int diskfree(char* path, DWORD *total_kb, DWORD *free_kb);
 
-/* USER CODE END Variables */    
+/* USER CODE END Variables */
 
-void MX_FATFS_Init(void) 
+void MX_FATFS_Init(void)
 {
   /*## FatFS: Link the SDRAMDISK driver ###########################*/
   retSDRAMDISK = FATFS_LinkDriver(&SDRAMDISK_Driver, SDRAMDISKPath);
@@ -63,21 +63,24 @@ void MX_FATFS_Init(void)
 	  retSDRAMDISK = f_mkfs(SDRAMDISKPath, FM_ANY, 0, workBuffer, sizeof(workBuffer));
 
   retSD = f_mount(&SDFatFS, SDPath, 0);
-  if (retSD == FR_OK)
-	  if(0) { retSD = f_mkfs(SDRAMDISKPath, FM_ANY, 0, workBuffer, sizeof(workBuffer)); }
+  if (retSD == FR_OK && 0) {
+	  printf("\nFormat %s ...", SDPath);
+	  retSD = f_mkfs(SDPath, FM_ANY, 0, workBuffer, sizeof(workBuffer));
+	  printf("%s\n", (retSD)? "Fail":"Done");
+  }
 
-  retUSER = f_mount(&USERFatFS, USERPath, 1);
-//  if (retUSER != FR_OK) {
-//	  printf("\nFormat %s ...", USERPath);
-//	  retUSER = f_mkfs(USERPath, FM_ANY, 0, workBuffer, sizeof(workBuffer));
-//	  printf("%s\n", (retUSER)? "Fail":"Done");
-//  }
+  retUSER = f_mount(&USERFatFS, USERPath, 0);
+  if (retUSER != FR_OK && 0) {
+	  printf("\nFormat %s ...", USERPath);
+	  retUSER = f_mkfs(USERPath, FM_ANY, 0, workBuffer, sizeof(workBuffer));
+	  printf("%s\n", (retUSER)? "Fail":"Done");
+  }
 
   /* USER CODE END Init */
 }
 
 /**
-  * @brief  Gets Time from RTC 
+  * @brief  Gets Time from RTC
   * @param  None
   * @retval Time in DWORD
   */
@@ -100,7 +103,7 @@ DWORD get_fattime(void)
 	dt.Seconds = time.Seconds;
 
 	return dt.ftime;
-  /* USER CODE END get_fattime */  
+  /* USER CODE END get_fattime */
 }
 
 /* USER CODE BEGIN Application */

@@ -54,18 +54,18 @@ void HAL_SD_MspInit(SD_HandleTypeDef* sdHandle)
   /* USER CODE END SDMMC1_MspInit 0 */
     /* SDMMC1 clock enable */
     __HAL_RCC_SDMMC1_CLK_ENABLE();
-  
+
     __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_GPIOD_CLK_ENABLE();
-    /**SDMMC1 GPIO Configuration    
+    /**SDMMC1 GPIO Configuration
     PC12     ------> SDMMC1_CK
     PC11     ------> SDMMC1_D3
     PC10     ------> SDMMC1_D2
     PD2     ------> SDMMC1_CMD
     PC9     ------> SDMMC1_D1
-    PC8     ------> SDMMC1_D0 
+    PC8     ------> SDMMC1_D0
     */
-    GPIO_InitStruct.Pin = SDMMC_CK_Pin|SDMMC_D3_Pin|SDMMC_D2_Pin|GPIO_PIN_9 
+    GPIO_InitStruct.Pin = SDMMC_CK_Pin|SDMMC_D3_Pin|SDMMC_D2_Pin|GPIO_PIN_9
                           |GPIO_PIN_8;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -139,16 +139,16 @@ void HAL_SD_MspDeInit(SD_HandleTypeDef* sdHandle)
   /* USER CODE END SDMMC1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_SDMMC1_CLK_DISABLE();
-  
-    /**SDMMC1 GPIO Configuration    
+
+    /**SDMMC1 GPIO Configuration
     PC12     ------> SDMMC1_CK
     PC11     ------> SDMMC1_D3
     PC10     ------> SDMMC1_D2
     PD2     ------> SDMMC1_CMD
     PC9     ------> SDMMC1_D1
-    PC8     ------> SDMMC1_D0 
+    PC8     ------> SDMMC1_D0
     */
-    HAL_GPIO_DeInit(GPIOC, SDMMC_CK_Pin|SDMMC_D3_Pin|SDMMC_D2_Pin|GPIO_PIN_9 
+    HAL_GPIO_DeInit(GPIOC, SDMMC_CK_Pin|SDMMC_D3_Pin|SDMMC_D2_Pin|GPIO_PIN_9
                           |GPIO_PIN_8);
 
     HAL_GPIO_DeInit(SDMMC_CMD_GPIO_Port, SDMMC_CMD_Pin);
@@ -160,7 +160,7 @@ void HAL_SD_MspDeInit(SD_HandleTypeDef* sdHandle)
 
   /* USER CODE END SDMMC1_MspDeInit 1 */
   }
-} 
+}
 
 /* USER CODE BEGIN 1 */
 

@@ -57,17 +57,17 @@ void HAL_QSPI_MspInit(QSPI_HandleTypeDef* qspiHandle)
   /* USER CODE END QUADSPI_MspInit 0 */
     /* QUADSPI clock enable */
     __HAL_RCC_QSPI_CLK_ENABLE();
-  
+
     __HAL_RCC_GPIOE_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOD_CLK_ENABLE();
-    /**QUADSPI GPIO Configuration    
+    /**QUADSPI GPIO Configuration
     PE2     ------> QUADSPI_BK1_IO2
     PB6     ------> QUADSPI_BK1_NCS
     PB2     ------> QUADSPI_CLK
     PD12     ------> QUADSPI_BK1_IO1
     PD13     ------> QUADSPI_BK1_IO3
-    PD11     ------> QUADSPI_BK1_IO0 
+    PD11     ------> QUADSPI_BK1_IO0
     */
     GPIO_InitStruct.Pin = QSPI_D2_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -113,14 +113,14 @@ void HAL_QSPI_MspDeInit(QSPI_HandleTypeDef* qspiHandle)
   /* USER CODE END QUADSPI_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_QSPI_CLK_DISABLE();
-  
-    /**QUADSPI GPIO Configuration    
+
+    /**QUADSPI GPIO Configuration
     PE2     ------> QUADSPI_BK1_IO2
     PB6     ------> QUADSPI_BK1_NCS
     PB2     ------> QUADSPI_CLK
     PD12     ------> QUADSPI_BK1_IO1
     PD13     ------> QUADSPI_BK1_IO3
-    PD11     ------> QUADSPI_BK1_IO0 
+    PD11     ------> QUADSPI_BK1_IO0
     */
     HAL_GPIO_DeInit(QSPI_D2_GPIO_Port, QSPI_D2_Pin);
 
@@ -132,7 +132,7 @@ void HAL_QSPI_MspDeInit(QSPI_HandleTypeDef* qspiHandle)
 
   /* USER CODE END QUADSPI_MspDeInit 1 */
   }
-} 
+}
 
 /* USER CODE BEGIN 1 */
 

@@ -21,10 +21,13 @@
 #include "bsp/fonts/fonts.h"
 #include "lcd_log/lcd_log.h"
 
-uint8_t resultQSPI;
+uint8_t resultQSPI = -1;
+
+void MCU_Config(void);
 
 extern void MX_USB_DEVICE_Init(void);
 extern void MX_FATFS_Init(void);
+extern void MX_LWIP_Init(void);
 
 result_t InitLCD(void)
 {
@@ -49,11 +52,16 @@ result_t InitLCD(void)
 result_t InitApplication(void)
 {
 	result_t result;
+
+	MCU_Config();
+
 	configureTimerForDelay_us();
 	// resultQSPI = BSP_QSPI_Init();
 	result = InitLCD();
 
+	resultQSPI = BSP_QSPI_Init();
 	MX_FATFS_Init();
+	MX_LWIP_Init();
 
 	return result;
 }

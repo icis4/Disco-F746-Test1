@@ -22,7 +22,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-  
 
 #ifdef OLD_CODE
 /* Kept to avoid issue when migrating old projects (as some user sections were renamed/changed). */
@@ -58,16 +57,16 @@ __weak uint8_t BSP_SDRAM_Init(void)
 /* USER CODE END BeforeReadSection */
 
 /**
-  * @brief  Reads an mount of data from the SDRAM memory in polling mode. 
+  * @brief  Reads an mount of data from the SDRAM memory in polling mode.
   * @param  uwStartAddress: Read start address
   * @param  pData: Pointer to data to be read
   * @param  uwDataSize: Size of read data from the memory
   * @retval SDRAM status : SDRAM_OK or SDRAM_ERROR.
   */
 __weak uint8_t BSP_SDRAM_ReadData(uint32_t uwStartAddress, uint32_t *pData, uint32_t uwDataSize)
-{ 
+{
   uint8_t sdramstatus = SDRAM_OK;
-  
+
   if(HAL_SDRAM_Read_32b(&hsdram1, (uint32_t *)uwStartAddress, pData, uwDataSize) != HAL_OK)
   {
     sdramstatus = SDRAM_ERROR;
@@ -84,14 +83,14 @@ __weak uint8_t BSP_SDRAM_ReadData(uint32_t uwStartAddress, uint32_t *pData, uint
   * @retval SDRAM status : SDRAM_OK or SDRAM_ERROR.
   */
 __weak uint8_t BSP_SDRAM_ReadData_DMA(uint32_t uwStartAddress, uint32_t *pData, uint32_t uwDataSize)
-{ 
+{
   uint8_t sdramstatus = SDRAM_OK;
-  
+
   if(HAL_SDRAM_Read_DMA(&hsdram1, (uint32_t *)uwStartAddress, pData, uwDataSize) != HAL_OK)
   {
     sdramstatus = SDRAM_ERROR;
   }
-   
+
   return sdramstatus;
 }
 
@@ -107,9 +106,9 @@ __weak uint8_t BSP_SDRAM_ReadData_DMA(uint32_t uwStartAddress, uint32_t *pData, 
   * @retval SDRAM status : SDRAM_OK or SDRAM_ERROR.
   */
 __weak uint8_t BSP_SDRAM_WriteData(uint32_t uwStartAddress, uint32_t *pData, uint32_t uwDataSize)
-{ 
+{
   uint8_t sdramstatus = SDRAM_OK;
-  
+
   if(HAL_SDRAM_Write_32b(&hsdram1, (uint32_t *)uwStartAddress, pData, uwDataSize) != HAL_OK)
   {
     sdramstatus = SDRAM_ERROR;
@@ -126,9 +125,9 @@ __weak uint8_t BSP_SDRAM_WriteData(uint32_t uwStartAddress, uint32_t *pData, uin
   * @retval SDRAM status : SDRAM_OK or SDRAM_ERROR.
   */
 __weak uint8_t BSP_SDRAM_WriteData_DMA(uint32_t uwStartAddress, uint32_t *pData, uint32_t uwDataSize)
-{ 
+{
   uint8_t sdramstatus = SDRAM_OK;
-  
+
   if(HAL_SDRAM_Write_DMA(&hsdram1, (uint32_t *)uwStartAddress, pData, uwDataSize) != HAL_OK)
   {
     sdramstatus = SDRAM_ERROR;
@@ -143,9 +142,9 @@ __weak uint8_t BSP_SDRAM_WriteData_DMA(uint32_t uwStartAddress, uint32_t *pData,
   * @retval SDRAM status : SDRAM_OK or SDRAM_ERROR.
   */
 __weak uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd)
-{ 
+{
   uint8_t sdramstatus = SDRAM_OK;
-  
+
   if(HAL_SDRAM_SendCommand(&hsdram1, SdramCmd, SDRAM_TIMEOUT) != HAL_OK)
   {
     sdramstatus = SDRAM_ERROR;
