@@ -21,9 +21,11 @@
 #include "bsp/fonts/fonts.h"
 #include "lcd_log/lcd_log.h"
 
-uint8_t resultQSPI = -1;
+#include "lwip.h"
+#include "mdns.h"
+extern struct netif gnetif;
 
-void MCU_Config(void);
+uint8_t resultQSPI = -1;
 
 extern void MX_USB_DEVICE_Init(void);
 extern void MX_FATFS_Init(void);
@@ -53,14 +55,13 @@ result_t InitApplication(void)
 {
 	result_t result;
 
-	MCU_Config();
-
 	configureTimerForDelay_us();
 	// resultQSPI = BSP_QSPI_Init();
 	result = InitLCD();
 
 	resultQSPI = BSP_QSPI_Init();
 	MX_FATFS_Init();
+	gnetif.hostname = "DISCO746G";
 	MX_LWIP_Init();
 
 	return result;

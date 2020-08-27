@@ -22,9 +22,45 @@
 #include "app/mcuutils.h"
 #include "app/tools.h"
 
+#include "lwip.h"
+#include "mdns.h"
+
+#if osCMSIS == 0x10002
+#define TIME_SEC ((float)osKernelSysTick() / (float)osKernelSysTickFrequency)
+#else
+#define TIME_SEC ((float)osKernelGetTickCount() / (float)osKernelGetSysTimerFreq())
+#endif
+
+#define DEBUG_FS(func, ...) \
+	do {\
+		FRESULT res = func(__VA_ARGS__);\
+		if (res != FR_OK) {\
+			printf("FAT Error: %d\n", res);\
+	  	}\
+	} while(0)
+
+extern struct netif gnetif;
+
 extern uint8_t resultQSPI;
 
 extern int diskfree(char* path, DWORD *total_kb, DWORD *free_kb);
+
+static void srv_txt(struct mdns_service *service, void *txt_userdata)
+{
+ int res = mdns_resp_add_service_txtitem(service, "path=/", 6);
+ LWIP_ERROR("mdns add service txt failed\n", (res == ERR_OK), return);
+}
+
+void MDNS_Init(void)
+{
+	/* Enable multicast for mDNS */
+	(heth.Instance)->MACFFR |= ETH_MULTICASTFRAMESFILTER_NONE;
+	gnetif.flags |= NETIF_FLAG_IGMP;
+
+	mdns_resp_init();
+	mdns_resp_add_netif(&gnetif, gnetif.hostname, 60);
+	mdns_resp_add_service(&gnetif, "disco", "_http", DNSSD_PROTO_TCP, 80, 3600, srv_txt, NULL);
+}
 
 /**
   * @brief  Default task
@@ -73,6 +109,13 @@ __NO_RETURN void StartDefaultTask(void *argument)
 //  BSP_DelayMicros(20000);
 //  printf("20000us = %ldms", osKernelGetTickCount() - time);
 
+	if (netif_is_link_up(&gnetif)) {
+		MDNS_Init();
+		puts("[PASS] LwIP");
+	} else {
+		puts("[FAIL] LwIP");
+	}
+
   printf("\n*** Ready ***\n");
 
 #if 0
@@ -118,8 +161,9 @@ __NO_RETURN void StartDefaultTask(void *argument)
 	  FIL fp;
 	  UINT bw;
 	  FSIZE_t size;
-	  f_open(&fp, "2:/log.txt", FA_OPEN_APPEND | FA_WRITE);
-	  f_write(&fp, "1234\n", 5, &bw);
+
+	  DEBUG_FS(f_open, &fp, "2:/log.txt", FA_OPEN_APPEND | FA_WRITE);
+	  DEBUG_FS(f_write, &fp, "1234\n", 5, &bw);
 	  size = f_size(&fp);
 	  printf("bw:%d, size:%lld\n", bw, size);
 	  f_close(&fp);

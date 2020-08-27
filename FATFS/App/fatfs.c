@@ -69,8 +69,8 @@ void MX_FATFS_Init(void)
 	  printf("%s\n", (retSD)? "Fail":"Done");
   }
 
-  retUSER = f_mount(&USERFatFS, USERPath, 0);
-  if (retUSER != FR_OK && 0) {
+  retUSER = f_mount(&USERFatFS, USERPath, 1);
+  if (retUSER != FR_OK && 1) {
 	  printf("\nFormat %s ...", USERPath);
 	  retUSER = f_mkfs(USERPath, FM_ANY, 0, workBuffer, sizeof(workBuffer));
 	  printf("%s\n", (retUSER)? "Fail":"Done");
