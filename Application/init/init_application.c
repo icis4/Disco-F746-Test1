@@ -61,8 +61,6 @@ result_t InitApplication(void)
 
 	resultQSPI = BSP_QSPI_Init();
 	MX_FATFS_Init();
-	gnetif.hostname = "DISCO746G";
-	MX_LWIP_Init();
 
 	return result;
 }

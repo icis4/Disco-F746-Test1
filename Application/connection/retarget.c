@@ -17,14 +17,13 @@ int _write(int file, char *ptr, int len)
 {
 	switch(file) {
 	default:
-#if 0
+#if defined(DEBUG)
 		HAL_UART_Transmit(&huart1, (uint8_t*)ptr, len, 100);
-#else
+#endif
 		for (int i = 0; i < len; i++)
 		{
 			__io_putchar(*ptr++);
 		}
-#endif
 		break;
 	}
 

@@ -51,16 +51,17 @@ static void srv_txt(struct mdns_service *service, void *txt_userdata)
  LWIP_ERROR("mdns add service txt failed\n", (res == ERR_OK), return);
 }
 
-void MDNS_Init(void)
-{
-	/* Enable multicast for mDNS */
-	(heth.Instance)->MACFFR |= ETH_MULTICASTFRAMESFILTER_NONE;
-	gnetif.flags |= NETIF_FLAG_IGMP;
-
-	mdns_resp_init();
-	mdns_resp_add_netif(&gnetif, gnetif.hostname, 60);
-	mdns_resp_add_service(&gnetif, "disco", "_http", DNSSD_PROTO_TCP, 80, 3600, srv_txt, NULL);
-}
+//void MDNS_Init(void)
+//{
+//	/* Enable multicast for mDNS */
+//	(heth.Instance)->MACFFR |= ETH_MULTICASTFRAMESFILTER_NONE;
+//	gnetif.flags |= NETIF_FLAG_IGMP;
+//
+//	mdns_resp_init();
+//	mdns_resp_add_netif(&gnetif, gnetif.hostname, 60);
+//	mdns_resp_add_service(&gnetif, "disco", "_http", DNSSD_PROTO_TCP, 80, 3600, srv_txt, NULL);
+//}
+//
 
 /**
   * @brief  Default task
@@ -109,12 +110,14 @@ __NO_RETURN void StartDefaultTask(void *argument)
 //  BSP_DelayMicros(20000);
 //  printf("20000us = %ldms", osKernelGetTickCount() - time);
 
-	if (netif_is_link_up(&gnetif)) {
-		MDNS_Init();
-		puts("[PASS] LwIP");
-	} else {
-		puts("[FAIL] LwIP");
-	}
+//	if (netif_is_link_up(&gnetif)) {
+//		MDNS_Init();
+//		puts("[PASS] LwIP");
+//	} else {
+//		puts("[FAIL] LwIP");
+//	}
+  extern void StartEthernet(void);
+  StartEthernet();
 
   printf("\n*** Ready ***\n");
 
